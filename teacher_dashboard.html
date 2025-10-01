@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduRescue - Teacher Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for transitions and shadows */
+    .fade-in {opacity:0; transform:translateY(20px); transition: opacity 0.8s, transform 0.8s;}
+    .fade-in.show {opacity:1; transform:translateY(0);}
+    .custom-shadow {box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px, rgba(0,0,0,0.3) 0px 8px 16px -8px;}
+  </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+
+<!-- Navbar -->
+<header class="bg-white custom-shadow fixed w-full top-0 z-50 rounded-b-xl">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="EduRescue (2).png" alt="EduRescue Logo" class="h-12"/>
+      <span class="text-xl font-bold text-primary">EduRescue</span>
+    </a>
+    <nav class="flex space-x-4">
+      <a href="#" class="font-semibold hover:text-accent">Dashboard</a>
+      <a href="logout.html" class="font-semibold hover:text-accent">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<section class="pt-24 container mx-auto fade-in">
+  <h1 class="text-3xl font-bold mb-6">Teacher Dashboard - [Teacher Name]</h1>
+  
+  <!-- Updated grid layout to 3 columns on medium screens and up -->
+  <div class="grid md:grid-cols-3 gap-6">
+    
+    <!-- Card 1: Class Students List -->
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h4 class="font-bold mb-2">Class Students</h4>
+      <ul class="list-disc pl-5 text-gray-600">
+        <li>Student 1 - Score: 80</li>
+        <li>Student 2 - Score: 90</li>
+        <li>Student 3 - Score: 75</li>
+      </ul>
+    </div>
+    
+    <!-- NEW CARD: Class Average Score -->
+    <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center text-center">
+      <h4 class="font-bold mb-2 text-lg">Class Average Score</h4>
+      <!-- Large, emphasized score value -->
+      <p class="text-5xl font-extrabold text-primary">81.7</p>
+      <p class="text-sm text-gray-500 mt-1">Based on recent quizzes</p>
+    </div>
+    
+    <!-- Card 3: Assign Quizzes / Drills -->
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h4 class="font-bold mb-2">Assign Quizzes / Drills</h4>
+      <button class="bg-accent text-white px-4 py-2 rounded-full hover:bg-darkOrange">Assign</button>
+    </div>
+    
+  </div>
+</section>
+
+<!-- JavaScript for scroll-based fade-in effect -->
+<script>
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  faders.forEach(fader => appearOnScroll.observe(fader));
+</script>
+</body>
+</html>

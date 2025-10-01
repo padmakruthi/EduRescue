@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduRescue - Preparedness Through Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2196F3;
+            --dark-blue: #1976D2;
+            --accent-orange: #FF9800;
+            --dark-orange: #F57C00;
+            --text-dark: #333333;
+            --text-light: #f8f8f8;
+            --background-light: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--background-light) 100%);
+        }
+
+        .intro-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 3rem;
+            background: var(--background-light);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px var(--shadow-light);
+            max-width: 95%;
+            width: 500px;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .logo {
+            width: 350px; /* Bigger logo */
+            height: auto;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease-out forwards;
+            transform: scale(0.95);
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem; /* Slightly bigger */
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 2s ease-out forwards;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .get-started-btn {
+            padding: 1rem 2.5rem;
+            background-color: var(--accent-orange);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .get-started-btn:hover {
+            background-color: var(--dark-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .intro-screen {
+                padding: 2rem;
+                width: 95%;
+            }
+
+            .logo {
+                width: 250px;
+                margin-bottom: 1.5rem;
+            }
+
+            .tagline {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .get-started-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('get-started-btn').addEventListener('click', () => {
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="intro-screen">
+        <img src="EduRescue (2).png" alt="EduRescue Logo" class="logo">
+        <h2 class="tagline">Learn. Prepare. Respond.</h2>
+        <button id="get-started-btn" class="get-started-btn">Get Started</button>
+    </div>
+</body>
+</html>

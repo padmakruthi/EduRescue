@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduRescue - Student Dashboard</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          // Define Custom Colors (Deep Purple and Bright Lime Green)
+          colors: {
+            primary: '#6B46C1', // Deep Purple (Original: Blue)
+            accent: '#A7F3D0',  // Bright Lime Green (Original: Orange)
+            // Add darker shades for hover effects
+            darkPurple: '#553C9A',
+            darkLime: '#86EFAC',
+          },
+          // Define Custom Font Family
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'], // New font
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style>
+    /* Custom CSS styles remain */
+    .fade-in {opacity:0; transform:translateY(20px); transition: opacity 0.8s, transform 0.8s;}
+    .fade-in.show {opacity:1; transform:translateY(0);}
+    .custom-shadow {box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px, rgba(0,0,0,0.3) 0px 8px 16px -8px;}
+  </style>
+</head>
+<body class="bg-gray-100 font-poppins"> 
+
+<header class="bg-white custom-shadow fixed w-full top-0 z-50 rounded-b-xl">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="EduRescue (2).png" alt="EduRescue Logo" class="h-12"/>
+      <span class="text-xl font-bold text-primary">EduRescue</span> 
+    </a>
+    <nav class="flex space-x-4">
+      <a href="#" class="font-semibold hover:text-accent">Dashboard</a>
+      <a href="logout.html" class="font-semibold hover:text-accent">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<section class="pt-24 container mx-auto fade-in">
+  <h1 class="text-3xl font-bold mb-6">Hi, [Student Name]! 🎓</h1>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h4 class="font-bold mb-2">Quizzes Attempted</h4>
+      <p>5</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h4 class="font-bold mb-2">Total Score</h4>
+      <p>420 pts</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h4 class="font-bold mb-2">Badges Earned</h4>
+      <p>🏅🏅</p>
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <h2 class="text-2xl font-bold mb-4">Available Quizzes & Simulations</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <a href="quizzes.html" class="bg-primary text-white p-6 rounded-xl shadow-lg hover:bg-darkPurple block text-center">Take Quizzes</a> 
+      <a href="drills.html" class="bg-accent text-gray-800 p-6 rounded-xl shadow-lg hover:bg-darkLime block text-center">Simulations & Drills</a> 
+    </div>
+  </div>
+</section>
+
+<script>
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  faders.forEach(fader => appearOnScroll.observe(fader));
+</script>
+</body>
+</html>

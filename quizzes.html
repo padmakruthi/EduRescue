@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizzes - EduRescue</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .quiz-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .quiz-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+    }
+    .modal-bg {
+      background: rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+
+<header class="bg-white shadow fixed w-full top-0 z-50">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="EduRescue (2).png" class="h-12" alt="EduRescue Logo">
+      <span class="font-bold text-xl text-primary">EduRescue</span>
+    </a>
+    <nav class="flex space-x-4">
+      <a href="index.html#features" class="hover:text-accent font-semibold">Home</a>
+      <a href="login.html" class="hover:text-accent font-semibold">Login</a>
+    </nav>
+  </div>
+</header>
+
+<section class="pt-28 container mx-auto px-4 fade-in">
+  <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Interactive Quizzes</h1>
+  <p class="mb-10 text-gray-700 text-center max-w-2xl mx-auto">Test your knowledge about disaster preparedness. Earn points, badges, and track your scores as you learn.</p>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Earthquake Quiz -->
+    <button id="earthquakeQuizBtn" class="quiz-card bg-gradient-to-r from-blue-500 to-blue-700 text-white p-8 rounded-2xl shadow-lg flex flex-col items-center justify-center hover:from-blue-600 hover:to-blue-800">
+      <div class="text-6xl mb-4">🌍</div>
+      <h2 class="text-2xl font-bold mb-2">Earthquake Quiz</h2>
+      <p class="mb-4 text-lg">10 Questions | Beginner</p>
+      <span class="bg-white text-blue-700 font-bold px-6 py-2 rounded-full hover:bg-gray-200 cursor-pointer">Start</span>
+    </button>
+
+    <!-- Other quizzes (static) -->
+    <div class="quiz-card bg-gradient-to-r from-teal-400 to-teal-600 text-white p-8 rounded-2xl shadow-lg flex flex-col items-center justify-center hover:from-teal-500 hover:to-teal-700">
+      <div class="text-6xl mb-4">💧</div>
+      <h2 class="text-2xl font-bold mb-2">Flood Quiz</h2>
+      <p class="mb-4 text-lg">8 Questions | Beginner</p>
+      <span class="bg-white text-teal-600 font-bold px-6 py-2 rounded-full hover:bg-gray-200 cursor-pointer">Start</span>
+    </div>
+    <div class="quiz-card bg-gradient-to-r from-red-500 to-red-700 text-white p-8 rounded-2xl shadow-lg flex flex-col items-center justify-center hover:from-red-600 hover:to-red-800">
+      <div class="text-6xl mb-4">🔥</div>
+      <h2 class="text-2xl font-bold mb-2">Fire Safety Quiz</h2>
+      <p class="mb-4 text-lg">12 Questions | Intermediate</p>
+      <span class="bg-white text-red-700 font-bold px-6 py-2 rounded-full hover:bg-gray-200 cursor-pointer">Start</span>
+    </div>
+  </div>
+</section>
+
+<!-- Quiz Modal -->
+<div id="quizModal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-bg">
+  <div class="bg-white rounded-xl w-11/12 md:w-2/3 lg:w-1/2 p-8 relative shadow-xl">
+    <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-900 font-bold">✖</button>
+    <h2 class="text-2xl font-bold mb-4">Earthquake Quiz</h2>
+    <div id="quizContent">
+      <p id="questionText" class="text-lg mb-6"></p>
+      <div id="optionsContainer" class="grid gap-4"></div>
+      <button id="nextBtn" class="mt-6 bg-accent text-white px-6 py-3 rounded-full hover:bg-darkOrange font-semibold">Next</button>
+    </div>
+    <p id="quizResult" class="text-center text-xl font-bold mt-6 hidden"></p>
+  </div>
+</div>
+
+<script>
+const earthquakeQuizBtn = document.getElementById('earthquakeQuizBtn');
+const quizModal = document.getElementById('quizModal');
+const closeModal = document.getElementById('closeModal');
+const questionText = document.getElementById('questionText');
+const optionsContainer = document.getElementById('optionsContainer');
+const nextBtn = document.getElementById('nextBtn');
+const quizResult = document.getElementById('quizResult');
+
+// Sample Questions
+const quizQuestions = [
+  { q: "What is the safest position during an earthquake?", options: ["Stand near windows", "Drop, Cover, Hold On", "Run outside immediately", "Hide under a door"], answer: 1 },
+  { q: "What should you avoid during an earthquake?", options: ["Using elevators", "Staying indoors", "Covering your head", "Crouching"], answer: 0 },
+  { q: "Which emergency kit item is most important?", options: ["Flashlight", "Laptop", "Perfume", "Shoes"], answer: 0 },
+];
+
+let currentQ = 0;
+let score = 0;
+
+// Open Modal
+earthquakeQuizBtn.addEventListener('click', () => {
+  quizModal.classList.remove('hidden');
+  loadQuestion();
+});
+
+// Close Modal
+closeModal.addEventListener('click', () => {
+  quizModal.classList.add('hidden');
+  currentQ = 0;
+  score = 0;
+  quizResult.classList.add('hidden');
+  nextBtn.classList.remove('hidden');
+});
+
+// Load Question
+function loadQuestion() {
+  const q = quizQuestions[currentQ];
+  questionText.textContent = q.q;
+  optionsContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.className = "w-full bg-gray-100 p-3 rounded-lg hover:bg-gray-200";
+    btn.onclick = () => checkAnswer(i);
+    optionsContainer.appendChild(btn);
+  });
+}
+
+// Check Answer
+function checkAnswer(selected) {
+  const correct = quizQuestions[currentQ].answer;
+  if (selected === correct) score++;
+  currentQ++;
+  if (currentQ < quizQuestions.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+// Show Result
+function showResult() {
+  questionText.textContent = '';
+  optionsContainer.innerHTML = '';
+  nextBtn.classList.add('hidden');
+  quizResult.textContent = `Quiz Completed! Your Score: ${score} / ${quizQuestions.length}`;
+  quizResult.classList.remove('hidden');
+}
+
+// Next Button (if you want step-by-step next without auto)
+nextBtn.addEventListener('click', () => {
+  if (currentQ < quizQuestions.length) loadQuestion();
+});
+</script>
+
+</body>
+</html>
+
+
